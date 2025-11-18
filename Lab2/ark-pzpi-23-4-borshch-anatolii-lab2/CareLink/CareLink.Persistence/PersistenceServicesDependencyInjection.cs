@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CareLink.Persistence
 {
-    public static class PersistenceDependencyInjection
+    public static class PersistenceServicesDependencyInjection
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {

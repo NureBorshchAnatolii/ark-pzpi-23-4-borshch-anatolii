@@ -13,12 +13,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace CareLink.Security
 {
-    public static class SecurityDependencyInjection
+    public static class SecurityServicesDependencyInjection
     {
         public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 
+            services.AddScoped<IUserContext, UserContext>();
             services.AddScoped<IJwtProvider, JwtProvider>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IPasswordHasher<User>, MyPasswordHasher<User>>();
