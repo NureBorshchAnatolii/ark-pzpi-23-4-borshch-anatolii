@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CareLink.Application\CareLink.Application.csproj" />
       <ProjectReference Include="..\CareLink.Domain\CareLink.Domain.csproj" />
     </ItemGroup>
 

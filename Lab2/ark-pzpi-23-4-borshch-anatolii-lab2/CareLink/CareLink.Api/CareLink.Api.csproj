@@ -12,12 +12,13 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="10.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CareLink.Application\CareLink.Application.csproj" />
       <ProjectReference Include="..\CareLink.Persistence\CareLink.Persistence.csproj" />
+      <ProjectReference Include="..\CareLink.Security\CareLink.Security.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿using CareLink.Persistence.DbContext;
+﻿using CareLink.Application.Contracts.Repositories;
+using CareLink.Persistence.DbContext;
+using CareLink.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,9 @@ namespace CareLink.Persistence
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            
             return services;
         }
     }
