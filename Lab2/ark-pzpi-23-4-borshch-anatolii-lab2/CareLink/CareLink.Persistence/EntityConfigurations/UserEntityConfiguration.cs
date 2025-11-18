@@ -9,8 +9,8 @@ namespace CareLink.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.Property(x => x.FirstName)
-            .IsRequired()
-            .HasMaxLength(100);
+                .IsRequired()
+                .HasMaxLength(100);
 
             builder.Property(x => x.LastName)
                 .IsRequired()
@@ -60,16 +60,6 @@ namespace CareLink.Persistence.EntityConfigurations
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany(x => x.SentMessages)
-                .WithOne(x => x.Sender)
-                .HasForeignKey(x => x.SenderId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(x => x.ReceivedMessages)
-                .WithOne(x => x.Receiver)
-                .HasForeignKey(x => x.ReceiverId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasMany<Subscription>()
                 .WithOne(x => x.User)

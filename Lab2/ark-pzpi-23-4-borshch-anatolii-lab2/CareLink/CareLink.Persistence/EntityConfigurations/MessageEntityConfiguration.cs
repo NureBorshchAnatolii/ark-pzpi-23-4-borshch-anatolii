@@ -11,7 +11,7 @@ namespace CareLink.Persistence.EntityConfigurations
             builder.Property(x => x.Content)
                 .IsRequired()
                 .HasMaxLength(600);
-            
+        
             builder.Property(x => x.SentAt)
                 .IsRequired();
 

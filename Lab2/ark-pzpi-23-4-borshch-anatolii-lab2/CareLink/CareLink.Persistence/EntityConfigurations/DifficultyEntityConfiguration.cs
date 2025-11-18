@@ -8,7 +8,9 @@ namespace CareLink.Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Difficulty> builder)
         {
-            throw new NotImplementedException();
+            builder.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(150);
         }
     }
 }

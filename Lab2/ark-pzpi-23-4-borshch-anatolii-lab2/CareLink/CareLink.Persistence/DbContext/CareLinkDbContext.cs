@@ -26,5 +26,12 @@ namespace CareLink.Persistence.DbContext
         public DbSet<Role> Roles { get; set; }
         public DbSet<SubscriptionPlanType> SubscriptionPlanTypes { get; set; }
         public DbSet<SubscriptionStatus> SubscriptionStatuses { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CareLinkDbContext).Assembly);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
