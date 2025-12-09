@@ -27,5 +27,13 @@ namespace CareLink.Api.Models.Requests
         [Required(ErrorMessage = "Birth date is required")]
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
+        
+        [Required(ErrorMessage = "Address date is required")]
+        [StringLength(300, MinimumLength = 5, ErrorMessage = "Address must be at least 6 characters")]
+        public string Address { get; set; }
+        
+        [Required(ErrorMessage = "PhoneNumber date is required")]
+        [StringLength(50, MinimumLength = 10, ErrorMessage = "Phone must be at least 10 characters")]
+        public string PhoneNumber { get; set; }
     }
 }

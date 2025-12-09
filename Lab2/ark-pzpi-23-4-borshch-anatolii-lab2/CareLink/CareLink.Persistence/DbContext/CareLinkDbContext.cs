@@ -30,8 +30,21 @@ namespace CareLink.Persistence.DbContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CareLinkDbContext).Assembly);
-
+            
+            AddStartUpEntities(modelBuilder);
+            
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void AddStartUpEntities(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().HasData(
+                new Role { Id = 1, Name = "Administrator" },
+                new Role { Id = 2, Name = "Moderator" },
+                new Role { Id = 3, Name = "Doctor" },
+                new Role { Id = 4, Name = "Guardian" },
+                new Role { Id = 5, Name = "Relative" }
+            );
         }
     }
 }

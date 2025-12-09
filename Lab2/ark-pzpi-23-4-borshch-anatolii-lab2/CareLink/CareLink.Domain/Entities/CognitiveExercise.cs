@@ -13,6 +13,9 @@ namespace CareLink.Domain.Entities
         public long TypeId { get; set; }
         public CognitiveExerciseType Type { get; set; } = null!;
         
+        public long UserId { get; set; }
+        public User User { get; set; } = null!;
+        
         public ICollection<CognitiveResult> Results { get; set; } = new List<CognitiveResult>();
     }
 }

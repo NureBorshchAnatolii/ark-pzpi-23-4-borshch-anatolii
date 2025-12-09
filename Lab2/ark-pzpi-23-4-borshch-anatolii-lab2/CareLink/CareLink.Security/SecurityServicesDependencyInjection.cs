@@ -15,7 +15,7 @@ namespace CareLink.Security
 {
     public static class SecurityServicesDependencyInjection
     {
-        public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSecurityServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 

@@ -6,6 +6,8 @@
         string Role,
         string Email,
         string Password,
-        DateTime BirthDate
+        DateTime BirthDate,
+        string Address,
+        string PhoneNumber
     );
 }

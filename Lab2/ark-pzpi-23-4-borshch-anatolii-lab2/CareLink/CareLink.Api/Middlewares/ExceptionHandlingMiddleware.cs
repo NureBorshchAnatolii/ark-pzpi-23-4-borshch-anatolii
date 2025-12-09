@@ -55,6 +55,8 @@ namespace CareLink.Api.Middlewares
                     break;
 
                 default:
+                    statusCode = HttpStatusCode.InternalServerError;
+                    message = exception.Message;
                     break;
             }
 

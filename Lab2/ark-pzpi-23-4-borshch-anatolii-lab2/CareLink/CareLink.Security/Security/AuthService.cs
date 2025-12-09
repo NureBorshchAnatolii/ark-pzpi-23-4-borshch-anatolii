@@ -86,7 +86,9 @@ namespace CareLink.Security.Security
                 RoleId = roleNumber,
                 Email = userData.Email,
                 DateOdBirth = userData.BirthDate,
-                DateCreated = DateTime.UtcNow
+                DateCreated = DateTime.UtcNow,
+                Address = userData.Address,
+                PhoneNumber = userData.PhoneNumber,
             };
 
             user.PasswordHash = _passwordHasher.HashPassword(user, userData.Password);

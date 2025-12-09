@@ -2,7 +2,7 @@
 
 namespace CareLink.Application.Contracts.Repositories
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IUserRepository : IGenericRepository<User>, IExistItemRepository<User>
     {
         Task<User?> GetByEmailAsync(string email);
     }

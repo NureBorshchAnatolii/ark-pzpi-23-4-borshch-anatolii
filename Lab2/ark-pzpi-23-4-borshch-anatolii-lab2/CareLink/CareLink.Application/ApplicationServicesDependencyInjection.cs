@@ -9,13 +9,17 @@ namespace CareLink.Application
 {
     public static class ApplicationServicesDependencyInjection
     {
-        public static IServiceCollection AddApplicationServicesDependencyInjection(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             //Validators
             services.AddScoped<IValidator<UpdateUserProfileRequest>, UpdateUserProfileValidator>();
             
             //Implementations
             services.AddScoped<IUserProfileService, UserProfileService>();
+            services.AddScoped<ICognitiveExerciseService, CognitiveExerciseService>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IIoTDeviceService, IoTDeviceService>();
+            services.AddScoped<IIoTReadingService, IoTReadingService>();
             
             return services;
         }

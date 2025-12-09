@@ -18,6 +18,16 @@ namespace CareLink.Persistence
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ICognitiveExerciseTypeRepository, CognitiveExerciseTypeRepository>();
+            services.AddScoped<ICognitiveResultRepository, CognitiveResultRepository>();
+            services.AddScoped<IRelativeRepository, RelativeRepository>();
+            services.AddScoped<ICognitiveExerciseRepository, CognitiveExerciseRepository>();
+            services.AddScoped<IIoTDeviceRepository, IoTDeviceRepository>();
+            services.AddScoped<IDeviceTypeRepository, DeviceTypeRepository>();
+
+            services.AddScoped<IRelationTypeRepository, RelationTypeRepository>();
+            services.AddScoped<IDifficultyRepository, DifficultyRepository>();
+            services.AddScoped<INotificationTypeRepository, NotificationRepository>();
             
             return services;
         }

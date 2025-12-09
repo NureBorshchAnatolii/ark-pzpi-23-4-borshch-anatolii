@@ -24,7 +24,7 @@ namespace CareLink.Security.Jwt
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.Name),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
 

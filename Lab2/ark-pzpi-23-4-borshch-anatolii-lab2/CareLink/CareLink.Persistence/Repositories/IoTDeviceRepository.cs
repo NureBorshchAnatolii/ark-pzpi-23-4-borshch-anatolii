@@ -1,0 +1,28 @@
+﻿using System.Linq.Expressions;
+using CareLink.Application.Contracts.Repositories;
+using CareLink.Domain.Entities;
+using CareLink.Persistence.DbContext;
+using Microsoft.EntityFrameworkCore;
+
+namespace CareLink.Persistence.Repositories
+{
+    public class IoTDeviceRepository : GenericRepository<IoTDevice>, IIoTDeviceRepository
+    {
+        public IoTDeviceRepository(CareLinkDbContext context) : base(context)
+        {
+        }
+
+        public async Task<IEnumerable<IoTDevice>> GetAllDevicesIncludedAsync()
+        {
+            return await _context.IotDevices
+                .Include(x => x.DeviceType)
+                .Include(x => x.User)
+                .ToListAsync();
+        }
+
+        public async Task<bool> ExistItemAsync(Expression<Func<IoTDevice, bool>> predicate)
+        {
+            return await _context.IotDevices.AnyAsync(predicate);
+        }
+    }
+}
