@@ -45,6 +45,53 @@ namespace CareLink.Persistence.DbContext
                 new Role { Id = 4, Name = "Guardian" },
                 new Role { Id = 5, Name = "Relative" }
             );
+            
+            modelBuilder.Entity<CognitiveExerciseType>().HasData(
+                new CognitiveExerciseType { Id = 1, Name = "Memory" },
+                new CognitiveExerciseType { Id = 2, Name = "Attention" },
+                new CognitiveExerciseType { Id = 3, Name = "Logic" },
+                new CognitiveExerciseType { Id = 4, Name = "Language" },
+                new CognitiveExerciseType { Id = 5, Name = "Orientation" }
+            );
+            
+            modelBuilder.Entity<DeviceType>().HasData(
+                new DeviceType { Id = 1, Name = "Smart Bracelet" },
+                new DeviceType { Id = 2, Name = "Fall Detector" },
+                new DeviceType { Id = 3, Name = "GPS Tracker" },
+                new DeviceType { Id = 4, Name = "Medical Sensor" }
+            );
+            
+            modelBuilder.Entity<Difficulty>().HasData(
+                new Difficulty { Id = 1, Name = "Easy" },
+                new Difficulty { Id = 2, Name = "Medium" },
+                new Difficulty { Id = 3, Name = "Hard" }
+            );
+            
+            modelBuilder.Entity<NotificationType>().HasData(
+                new NotificationType { Id = 1, Name = "System" },
+                new NotificationType { Id = 2, Name = "Health Alert" },
+                new NotificationType { Id = 3, Name = "Medication Reminder" },
+                new NotificationType { Id = 4, Name = "Fall Detected" }
+            );
+            
+            modelBuilder.Entity<RelationType>().HasData(
+                new RelationType { Id = 1, Name = "Child" },
+                new RelationType { Id = 2, Name = "Guardian" },
+                new RelationType { Id = 3, Name = "Partner" }
+            );
+            
+            modelBuilder.Entity<SubscriptionPlanType>().HasData(
+                new SubscriptionPlanType { Id = 1, Name = "Free" },
+                new SubscriptionPlanType { Id = 2, Name = "Basic" },
+                new SubscriptionPlanType { Id = 3, Name = "Premium" }
+            );
+            
+            modelBuilder.Entity<SubscriptionStatus>().HasData(
+                new SubscriptionStatus { Id = 1, Name = "Active" },
+                new SubscriptionStatus { Id = 2, Name = "Paused" },
+                new SubscriptionStatus { Id = 3, Name = "Expired" },
+                new SubscriptionStatus { Id = 4, Name = "Cancelled" }
+            );
         }
     }
 }

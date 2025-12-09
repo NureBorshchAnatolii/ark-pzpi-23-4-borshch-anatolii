@@ -3,7 +3,7 @@
     public record UserRegisterDto(
         string Name,
         string Surname,
-        string Role,
+        long RoleId,
         string Email,
         string Password,
         DateTime BirthDate,

@@ -19,7 +19,7 @@ namespace CareLink.Persistence.EntityConfigurations
             builder.HasOne(x => x.User)
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

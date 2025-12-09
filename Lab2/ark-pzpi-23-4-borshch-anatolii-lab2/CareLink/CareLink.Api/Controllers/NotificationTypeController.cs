@@ -1,10 +1,12 @@
 ﻿using CareLink.Application.Contracts.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CareLink.Api.Controllers
 {
     [ApiController]
     [Route("api/notiffication-type")]
+    [Authorize]
     public class NotificationTypeController : ControllerBase
     {
         private readonly INotificationTypeRepository _notifficationTypeRepository;

@@ -50,7 +50,7 @@ namespace CareLink.Api.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<ApiResponse>> Register([FromBody] RegisterRequest request)
         {
-            var registerDto = new UserRegisterDto(request.FirstName, request.LastName, request.Role
+            var registerDto = new UserRegisterDto(request.FirstName, request.LastName, request.RoleId
                 , request.Email, request.Password, request.BirthDate, request.Address, request.PhoneNumber);
             
             await _authService.Register(registerDto);

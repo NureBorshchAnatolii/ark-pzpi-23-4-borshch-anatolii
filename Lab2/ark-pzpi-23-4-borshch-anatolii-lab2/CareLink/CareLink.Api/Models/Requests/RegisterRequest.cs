@@ -13,8 +13,7 @@ namespace CareLink.Api.Models.Requests
         public string LastName { get; set; } = null!;
 
         [Required(ErrorMessage = "Role is required")]
-        [StringLength(50, MinimumLength = 5, ErrorMessage = "Role must be between 3 and 50 characters")]
-        public string Role { get; set; } = null!;
+        public long RoleId { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]

@@ -22,5 +22,39 @@ namespace CareLink.Persistence.Repositories
         {
             return await _context.Users.AnyAsync(predicate);
         }
+        
+        public async Task DeleteUserWithRelationsAsync(long userId)
+        {
+            var user = await _context.Users
+                .Include(u => u.SentMessages)
+                .Include(u => u.ReceivedMessages)
+                .Include(u => u.IoTDevices)
+                .Include(u => u.Notifications)
+                .Include(u => u.Guardians)
+                .Include(u => u.RelativeOf)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+                throw new ArgumentException("User not found");
+
+            _context.Messages.RemoveRange(user.SentMessages);
+            _context.Messages.RemoveRange(user.ReceivedMessages);
+
+            _context.IotDevices.RemoveRange(user.IoTDevices);
+            _context.Notifications.RemoveRange(user.Notifications);
+
+            foreach (var guardian in user.Guardians)
+                _context.Relatives.Remove(guardian);
+
+            foreach (var relative in user.RelativeOf)
+                _context.Relatives.Remove(relative);
+
+            var subscriptions = _context.Set<Subscription>().Where(s => s.UserId == userId);
+            _context.Set<Subscription>().RemoveRange(subscriptions);
+
+            _context.Users.Remove(user);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

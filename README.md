@@ -6,6 +6,6 @@
 
 Правила оформлення програмного коду C# за стандартами MSDN
 
-Основні методи рефакторингу програмного коду за Мартіном Фаулером
+Методи рефакторингу програмного коду. Replace Temp with Query . Replace Conditional with Polymorphism .  Simplify Conditional Expression.
 
 Програмна система автоматизації догляду за літніми людьми "CareLink"

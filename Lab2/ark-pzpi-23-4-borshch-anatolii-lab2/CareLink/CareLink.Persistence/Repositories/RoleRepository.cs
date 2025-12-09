@@ -21,9 +21,9 @@ namespace CareLink.Persistence.Repositories
             return currentRole.Id;
         }
 
-        public async Task<long> IsRoleValid(long role)
+        public async Task<long> IsRoleValid(long roleId)
         {
-            var currentRole = await _context.Roles.FirstOrDefaultAsync(x => x.Id == role);
+            var currentRole = await _context.Roles.FirstOrDefaultAsync(x => x.Id == roleId);
             
             if(currentRole == null)
                 throw new ArgumentException("Role does not exist");

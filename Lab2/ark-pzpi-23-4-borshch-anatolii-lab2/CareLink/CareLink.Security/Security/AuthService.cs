@@ -77,7 +77,7 @@ namespace CareLink.Security.Security
                 throw new InvalidOperationException("User already exists.");
             }
             
-            var roleNumber = await _roleRepository.IsRoleValid(userData.Role);
+            var roleNumber = await _roleRepository.IsRoleValid(userData.RoleId);
             
             var user = new User
             {

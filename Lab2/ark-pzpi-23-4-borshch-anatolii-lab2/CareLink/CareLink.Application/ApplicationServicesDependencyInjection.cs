@@ -20,6 +20,7 @@ namespace CareLink.Application
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IIoTDeviceService, IoTDeviceService>();
             services.AddScoped<IIoTReadingService, IoTReadingService>();
+            services.AddScoped<IRelativeService, RelativeService>();
             
             return services;
         }

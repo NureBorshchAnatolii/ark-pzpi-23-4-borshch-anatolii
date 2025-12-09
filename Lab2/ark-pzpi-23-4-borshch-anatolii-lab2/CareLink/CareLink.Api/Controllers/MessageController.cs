@@ -31,6 +31,7 @@ namespace CareLink.Api.Controllers
             return Ok(messages);
         }
 
+        [HttpPost]
         public async Task<IActionResult> CreateMessageAsync([FromBody] CreateMessageRequest messageDto)
         {
             var senderId = _userContext.GetApplicationUserId();
@@ -46,7 +47,7 @@ namespace CareLink.Api.Controllers
         {
             var userId = _userContext.GetApplicationUserId();
 
-            var request = new MessageUpdateRequest(messageDto.MessageId, messageDto.NewContent);
+            var request = new MessageUpdateRequest(messageId, messageDto.NewContent);
 
             var updated = await _messageService.UpdateMessageAsync(request);
             return Ok(updated);

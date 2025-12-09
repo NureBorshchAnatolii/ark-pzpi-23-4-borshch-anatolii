@@ -29,7 +29,7 @@ namespace CareLink.Application.Implementations
 
         public async Task<IEnumerable<CognitiveExerciseDto>> GetAllCognitiveExercisesAsync()
         {
-            var cognitiveExercises = await _cognitiveRepository.GetAllAsync();
+            var cognitiveExercises = await _cognitiveRepository.GetAllIncludedAsync();
             var mapped = cognitiveExercises.Select(MapToCognitiveExerciseDto);
             return mapped;
         }

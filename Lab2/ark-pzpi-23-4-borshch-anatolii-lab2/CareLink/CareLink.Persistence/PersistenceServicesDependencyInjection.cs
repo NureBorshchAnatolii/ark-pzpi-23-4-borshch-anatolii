@@ -24,7 +24,9 @@ namespace CareLink.Persistence
             services.AddScoped<ICognitiveExerciseRepository, CognitiveExerciseRepository>();
             services.AddScoped<IIoTDeviceRepository, IoTDeviceRepository>();
             services.AddScoped<IDeviceTypeRepository, DeviceTypeRepository>();
-
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IIoTReadingRepository, IoTReadingRepository>();
+            
             services.AddScoped<IRelationTypeRepository, RelationTypeRepository>();
             services.AddScoped<IDifficultyRepository, DifficultyRepository>();
             services.AddScoped<INotificationTypeRepository, NotificationRepository>();

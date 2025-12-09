@@ -30,7 +30,7 @@ namespace CareLink.Application.Implementations
             return usersMessages.Select(MapToDto);
         }
 
-        public async Task<Message> CreateMessageAsync(MessageCreateRequest request)
+        public async Task<MessageDto> CreateMessageAsync(MessageCreateRequest request)
         {
             var sender = await _userRepository.GetByIdAsync(request.SenderId);
             if (sender is null)
@@ -50,10 +50,10 @@ namespace CareLink.Application.Implementations
 
             await _messageRepository.AddAsync(message);
 
-            return message;
+            return MapToDto(message);
         }
 
-        public async Task<Message> UpdateMessageAsync(MessageUpdateRequest request)
+        public async Task<MessageDto> UpdateMessageAsync(MessageUpdateRequest request)
         {
             var message = await _messageRepository.GetByIdAsync(request.MessageId);
             if (message is null)
@@ -63,7 +63,7 @@ namespace CareLink.Application.Implementations
 
             await _messageRepository.UpdateAsync(message);
 
-            return message;
+            return MapToDto(message);
         }
 
         public async Task DeleteMessageAsync(MessageDeleteRequest request)

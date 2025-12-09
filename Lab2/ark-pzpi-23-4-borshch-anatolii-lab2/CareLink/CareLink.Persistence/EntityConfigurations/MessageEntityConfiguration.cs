@@ -23,7 +23,7 @@ namespace CareLink.Persistence.EntityConfigurations
             builder.HasOne(x => x.Receiver)
                 .WithMany(x => x.ReceivedMessages)
                 .HasForeignKey(x => x.ReceiverId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

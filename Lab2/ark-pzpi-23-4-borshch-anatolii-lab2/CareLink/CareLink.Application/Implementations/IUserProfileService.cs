@@ -57,7 +57,7 @@ namespace CareLink.Application.Implementations
             if (user == null)
                 throw new ArgumentException("User not found");
             
-            await _userRepository.DeleteAsync(user);
+            await _userRepository.DeleteUserWithRelationsAsync(user.Id);
         }
     }
 }
