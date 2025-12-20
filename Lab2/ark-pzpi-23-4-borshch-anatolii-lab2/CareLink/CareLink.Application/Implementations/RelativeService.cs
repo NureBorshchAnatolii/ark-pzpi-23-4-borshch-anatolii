@@ -72,7 +72,7 @@ namespace CareLink.Application.Implementations
                 r.GuardianUserId == request.GuardianUserId &&
                 r.RelativeUserId == request.RelativeUserId);
 
-            if (!existing)
+            if (existing)
                 throw new InvalidOperationException("This relative is already assigned to the guardian");
         }
 

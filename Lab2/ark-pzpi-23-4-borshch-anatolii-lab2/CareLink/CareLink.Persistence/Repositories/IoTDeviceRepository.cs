@@ -24,5 +24,15 @@ namespace CareLink.Persistence.Repositories
         {
             return await _context.IotDevices.AnyAsync(predicate);
         }
+        
+        public async Task<IEnumerable<IoTDevice>> GetDevicesByUserIdAsync(long userId)
+        {
+            return await _context.IotDevices
+                .AsNoTracking()
+                .Include(d => d.DeviceType)
+                .Include(d => d.Readings)
+                .Where(d => d.UserId == userId)
+                .ToListAsync();
+        }
     }
 }

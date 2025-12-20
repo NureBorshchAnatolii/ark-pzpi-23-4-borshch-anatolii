@@ -1,4 +1,5 @@
 ﻿using CareLink.Application.Contracts.Repositories;
+using CareLink.Domain.Entities.SubEntities;
 using CareLink.Persistence.DbContext;
 using CareLink.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,10 @@ namespace CareLink.Persistence
             
             services.AddScoped<IRelationTypeRepository, RelationTypeRepository>();
             services.AddScoped<IDifficultyRepository, DifficultyRepository>();
-            services.AddScoped<INotificationTypeRepository, NotificationRepository>();
+            services.AddScoped<INotificationTypeRepository, NotificationTypeRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<ISubscriptionPlanTypeRepository, SubscriptionPlanTypeRepository>();
             
             return services;
         }

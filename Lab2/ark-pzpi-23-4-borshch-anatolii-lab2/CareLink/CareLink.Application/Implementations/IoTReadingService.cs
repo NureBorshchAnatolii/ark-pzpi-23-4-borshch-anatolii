@@ -7,8 +7,8 @@ namespace CareLink.Application.Implementations
 {
     public class IoTReadingService : IIoTReadingService
     {
-        private readonly IIoTReadingRepository _readingRepository;
         private readonly IIoTDeviceRepository _deviceRepository;
+        private readonly IIoTReadingRepository _readingRepository;
 
         public IoTReadingService(
             IIoTReadingRepository readingRepository,
@@ -36,31 +36,22 @@ namespace CareLink.Application.Implementations
             return MapToDto(reading);
         }
 
-        public async Task<IEnumerable<IoTReadingDto>> GetAllDeviceReadingsAsync(long deviceId, long userId)
+        public async Task<IEnumerable<IoTReadingDto>> GetAllReadingsByUserAsync(long userId)
         {
-            await EnsureDeviceOwnedByUser(deviceId, userId);
-
-            var readings = await _readingRepository.GetByDeviceIdAsync(deviceId);
-
+            var readings = await _readingRepository.GetByUserIdAsync(userId);
             return readings.Select(MapToDto);
         }
 
-        public async Task<IEnumerable<IoTReadingDto>> GetLatestReadingsAsync(long deviceId, int count, long userId)
+        public async Task<IEnumerable<IoTReadingDto>> GetLatestReadingsByUserAsync(long userId, int count)
         {
-            await EnsureDeviceOwnedByUser(deviceId, userId);
-
-            var readings = await _readingRepository.GetLatestReadingsAsync(deviceId, count);
-
+            var readings = await _readingRepository.GetLatestReadingsAsync(userId, count);
             return readings.Select(MapToDto);
         }
 
-        public async Task<IEnumerable<IoTReadingDto>> GetReadingsRangeAsync(long deviceId, DateTime from, DateTime to,
-            long userId)
+        public async Task<IEnumerable<IoTReadingDto>> GetReadingsInRangeByUserAsync(long userId, DateTime from,
+            DateTime to)
         {
-            await EnsureDeviceOwnedByUser(deviceId, userId);
-
-            var readings = await _readingRepository.GetReadingsInRangeAsync(deviceId, from, to);
-
+            var readings = await _readingRepository.GetReadingsInRangeAsync(userId, from, to);
             return readings.Select(MapToDto);
         }
 

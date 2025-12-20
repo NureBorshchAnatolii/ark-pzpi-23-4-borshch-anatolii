@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CareLink.Api.Controllers
 {
     [ApiController]
-    [Route("api/iot-device")]
+    [Route("api/iot-devices")]
     [Authorize]
     public class IoTDeviceController : ControllerBase
     {

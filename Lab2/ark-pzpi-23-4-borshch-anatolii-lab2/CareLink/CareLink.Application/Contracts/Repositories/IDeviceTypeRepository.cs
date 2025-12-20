@@ -2,7 +2,7 @@
 
 namespace CareLink.Application.Contracts.Repositories
 {
-    public interface IDeviceTypeRepository : IGenericRepository<DeviceType>
+    public interface IDeviceTypeRepository : IGenericRepository<DeviceType>, IExistItemRepository<DeviceType>
     {
         
     }

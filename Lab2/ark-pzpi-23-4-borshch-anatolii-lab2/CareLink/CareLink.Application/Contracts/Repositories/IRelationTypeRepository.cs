@@ -2,7 +2,7 @@
 
 namespace CareLink.Application.Contracts.Repositories
 {
-    public interface IRelationTypeRepository : IGenericRepository<RelationType>
+    public interface IRelationTypeRepository : IGenericRepository<RelationType>, IExistItemRepository<RelationType>
     {
         
     }

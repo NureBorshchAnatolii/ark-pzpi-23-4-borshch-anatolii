@@ -18,5 +18,25 @@ namespace CareLink.Persistence.Repositories
                 .OrderByDescending(m => m.SentAt)
                 .ToListAsync();
         }
+        
+        public async Task<IEnumerable<Message>> GetSentMessagesByUserAsync(long userId)
+        {
+            return await _context.Messages
+                .AsNoTracking()
+                .Include(m => m.Sender)
+                .Include(m => m.Receiver)
+                .Where(m => m.SenderId == userId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Message>> GetReceivedMessagesByUserAsync(long userId)
+        {
+            return await _context.Messages
+                .AsNoTracking()
+                .Include(m => m.Sender)
+                .Include(m => m.Receiver)
+                .Where(m => m.ReceiverId == userId)
+                .ToListAsync();
+        }
     }
 }

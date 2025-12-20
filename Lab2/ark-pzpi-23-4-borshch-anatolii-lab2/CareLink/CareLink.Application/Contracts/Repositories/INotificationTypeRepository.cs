@@ -2,7 +2,7 @@
 
 namespace CareLink.Application.Contracts.Repositories
 {
-    public interface INotificationTypeRepository : IGenericRepository<NotificationType>
+    public interface INotificationTypeRepository : IGenericRepository<NotificationType>, IExistItemRepository<NotificationType>
     {
         
     }

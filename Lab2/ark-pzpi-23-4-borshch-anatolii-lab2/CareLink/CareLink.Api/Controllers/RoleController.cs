@@ -1,10 +1,12 @@
 ﻿using CareLink.Application.Contracts.Repositories;
+using CareLink.Domain.Entities.SubEntities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CareLink.Api.Controllers
 {
     [ApiController]
-    [Route("api/role")]
+    [Route("api/roles")]
     public class RoleController : ControllerBase
     {
         private readonly IRoleRepository _roleRepository;
@@ -19,6 +21,43 @@ namespace CareLink.Api.Controllers
         {
             var types = await _roleRepository.GetAllAsync();
             return Ok(types);
+        }
+        
+        [HttpPost]
+        [Authorize(Roles = "Administrator,Moderator")]
+        public async Task<IActionResult> CreateRole([FromBody] string deviceType)
+        {
+            var existedType = await _roleRepository.ExistItemAsync(x => x.Name.ToLower() == deviceType.Trim().ToLower());
+            if (existedType)
+                return BadRequest($"Device type {deviceType} already exists");
+            
+            await _roleRepository.AddAsync(new Role() { Name = deviceType });
+            return Created();
+        }
+
+        [HttpPut("{typeId:long}")]
+        [Authorize(Roles = "Administrator,Moderator")]
+        public async Task<IActionResult> UpdateRole(long typeId, [FromBody] string deviceType)
+        {
+            var existedType = await _roleRepository.GetByIdAsync(typeId);
+            if (existedType == null)
+                return BadRequest($"Device type {deviceType} not found");
+            
+            existedType.Name = deviceType;
+            await _roleRepository.UpdateAsync(existedType);
+            return Ok();
+        }
+
+        [HttpDelete("{typeId:long}")]
+        [Authorize(Roles = "Administrator,Moderator")]
+        public async Task<IActionResult> DeleteRole(long typeId)
+        {
+            var existedType = await _roleRepository.GetByIdAsync(typeId);
+            if (existedType == null)
+                return BadRequest($"Device type {typeId} not found");
+            
+            await _roleRepository.DeleteAsync(existedType);
+            return Ok();
         }
     }
 }

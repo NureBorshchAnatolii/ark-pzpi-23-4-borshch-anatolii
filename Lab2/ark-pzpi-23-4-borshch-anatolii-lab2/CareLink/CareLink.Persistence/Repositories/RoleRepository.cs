@@ -1,4 +1,5 @@
-﻿using CareLink.Application.Contracts.Repositories;
+﻿using System.Linq.Expressions;
+using CareLink.Application.Contracts.Repositories;
 using CareLink.Domain.Entities.SubEntities;
 using CareLink.Persistence.DbContext;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,11 @@ namespace CareLink.Persistence.Repositories
                 throw new ArgumentException("Role does not exist");
             
             return currentRole.Id;
+        }
+
+        public async Task<bool> ExistItemAsync(Expression<Func<Role, bool>> predicate)
+        {
+            return await _context.Roles.AnyAsync(predicate);
         }
     }
 }

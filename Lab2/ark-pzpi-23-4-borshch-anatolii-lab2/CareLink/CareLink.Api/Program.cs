@@ -2,9 +2,12 @@ using CareLink.Api.SwaggerConfigs;
 using CareLink.Application;
 using CareLink.Persistence;
 using CareLink.Security;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

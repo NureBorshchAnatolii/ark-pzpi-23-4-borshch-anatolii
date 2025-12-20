@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CareLink.Api.Controllers
 {
     [ApiController]
-    [Route("api/message")]
+    [Route("api/messages")]
     [Authorize]
     public class MessageController : ControllerBase
     {

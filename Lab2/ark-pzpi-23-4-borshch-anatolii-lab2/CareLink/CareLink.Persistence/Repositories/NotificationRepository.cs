@@ -5,7 +5,7 @@ using CareLink.Persistence.DbContext;
 
 namespace CareLink.Persistence.Repositories
 {
-    public class NotificationRepository : GenericRepository<NotificationType>, INotificationTypeRepository
+    public class NotificationRepository : GenericRepository<Notification>, INotificationRepository
     {
         public NotificationRepository(CareLinkDbContext context) : base(context)
         {

@@ -1,6 +1,7 @@
 ﻿using CareLink.Application.Contracts.Repositories;
 using CareLink.Application.Contracts.Services;
 using CareLink.Application.Dtos.Messages;
+using CareLink.Application.Notifications;
 using CareLink.Domain.Entities;
 
 namespace CareLink.Application.Implementations
@@ -30,6 +31,7 @@ namespace CareLink.Application.Implementations
             return usersMessages.Select(MapToDto);
         }
 
+        [Notify(1)] 
         public async Task<MessageDto> CreateMessageAsync(MessageCreateRequest request)
         {
             var sender = await _userRepository.GetByIdAsync(request.SenderId);

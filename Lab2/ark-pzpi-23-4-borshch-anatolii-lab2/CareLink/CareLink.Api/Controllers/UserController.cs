@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CareLink.Api.Controllers
 {
     [ApiController]
-    [Route("api/v1/user")]
+    [Route("api/v1/users")]
     [Authorize]
     public class UserController : ControllerBase
     {

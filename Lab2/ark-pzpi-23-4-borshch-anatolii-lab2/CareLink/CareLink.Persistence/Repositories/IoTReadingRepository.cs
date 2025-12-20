@@ -11,33 +11,34 @@ namespace CareLink.Persistence.Repositories
         {
         }
         
-        public async Task<IEnumerable<IoTReading>> GetByDeviceIdAsync(long deviceId)
+        public async Task<IEnumerable<IoTReading>> GetByUserIdAsync(long userId)
         {
-            return await _context.IotReadings
+            return await _context.IotDevices
+                .Where(d => d.UserId == userId)
+                .SelectMany(d => d.Readings)
                 .AsNoTracking()
-                .Where(r => r.DeviceId == deviceId)
                 .OrderByDescending(r => r.ReadDateTime)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<IoTReading>> GetLatestReadingsAsync(long deviceId, int count)
+        public async Task<IEnumerable<IoTReading>> GetLatestReadingsAsync(long userId, int count)
         {
-            return await _context.IotReadings
+            return await _context.IotDevices
+                .Where(d => d.UserId == userId)
+                .SelectMany(d => d.Readings)
                 .AsNoTracking()
-                .Where(r => r.DeviceId == deviceId)
                 .OrderByDescending(r => r.ReadDateTime)
                 .Take(count)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<IoTReading>> GetReadingsInRangeAsync(long deviceId, DateTime from, DateTime to)
+        public async Task<IEnumerable<IoTReading>> GetReadingsInRangeAsync(long userId, DateTime from, DateTime to)
         {
-            return await _context.IotReadings
+            return await _context.IotDevices
+                .Where(d => d.UserId == userId)
+                .SelectMany(d => d.Readings)
                 .AsNoTracking()
-                .Where(r =>
-                    r.DeviceId == deviceId &&
-                    r.ReadDateTime >= from &&
-                    r.ReadDateTime <= to)
+                .Where(r => r.ReadDateTime >= from && r.ReadDateTime <= to)
                 .OrderBy(r => r.ReadDateTime)
                 .ToListAsync();
         }
