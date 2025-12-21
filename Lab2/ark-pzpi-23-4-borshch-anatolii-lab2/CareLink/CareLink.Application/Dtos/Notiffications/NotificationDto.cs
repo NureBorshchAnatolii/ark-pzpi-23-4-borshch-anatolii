@@ -8,6 +8,5 @@
         public bool IsRead { get; set; }
         public string GroupOfIds { get; set; } = null!;
         public long NotificationTypeId { get; set; }
-        public string NotificationTypeName { get; set; } = null!;
     }
 }

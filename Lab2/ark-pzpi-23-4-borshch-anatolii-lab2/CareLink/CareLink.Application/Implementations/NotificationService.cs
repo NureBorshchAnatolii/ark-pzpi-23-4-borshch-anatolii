@@ -45,7 +45,6 @@ namespace CareLink.Application.Implementations
                 IsRead = notification.IsRead,
                 GroupOfIds = notification.GroupOfIds,
                 NotificationTypeId = notification.NotificationTypeId,
-                NotificationTypeName = notification.Type.Name
             };
         }
     }

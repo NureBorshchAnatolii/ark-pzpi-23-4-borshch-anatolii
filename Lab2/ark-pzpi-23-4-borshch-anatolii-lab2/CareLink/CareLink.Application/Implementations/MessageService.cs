@@ -31,7 +31,6 @@ namespace CareLink.Application.Implementations
             return usersMessages.Select(MapToDto);
         }
 
-        [Notify(1)] 
         public async Task<MessageDto> CreateMessageAsync(MessageCreateRequest request)
         {
             var sender = await _userRepository.GetByIdAsync(request.SenderId);

@@ -23,20 +23,24 @@ namespace CareLink.Application
             services.AddScoped<IIoTReadingService, IoTReadingService>();
             services.AddScoped<IRelativeService, RelativeService>();
             services.AddScoped<INotificationContentFactory, NotificationContentFactory>();
-
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IPdfService, PdfService>();
             services.AddScoped<IRelativeMetricsService, RelativeMetricsService>();
+            services.AddScoped<MessageService>();
+            services.AddScoped<INotificationContentFactory, NotificationContentFactory>();
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<FileLogReaderService>();
+            services.AddScoped<IAdminService, AdminService>();
             
             services.AddScoped<IMessageService>(sp =>
             {
-                var service = new MessageService(
-                    sp.GetRequiredService<IMessageRepository>(),
-                    sp.GetRequiredService<IUserRepository>());
+                var core = sp.GetRequiredService<MessageService>();
 
-                return NotificationDecoratorFactory.Create<IMessageService>(
-                    service,
+                return new MessageNotificationDecorator(
+                    core,
                     sp.GetRequiredService<INotificationRepository>(),
-                    sp.GetRequiredService<INotificationContentFactory>());
+                    sp.GetRequiredService<INotificationContentFactory>()
+                );
             });
             
             return services;
