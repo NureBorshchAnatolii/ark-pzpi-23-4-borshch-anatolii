@@ -1,1 +1,345 @@
+﻿Міністерство освіти і науки України
+Харківський національний університет радіоелектроніки
+Кафедра програмної інженерії
+
+
+
+
+
+
+
+Лабораторна робота № 4
+з дисципліни «Аналіз та рефакторинг коду»
+на тему: «Створення IоT клієнта»
+
+
+
+
+
+
+
+
+Виконав						       Перевірив
+ст. гр. ПЗПІ-23-4                                                 ст. вик. Сокорчук Ігор Петрович
+Борщ Анатолій Сергійович					
+
+
+
+
+Харків 2025
+1 ІСТОРІЯ ЗМІН
+№ДатаВерсія звітуОпис змін та виправлень121.12.20251.0Зробив заповнив основні розділи
+
+
+2 ЗАВДАННЯ
+   2.1 Мета роботи:
+   Отримати практичні навички з розробки IoT клієнта, включаючи проектування його архітектури, бізнес логіки, налаштувань, та інтеграцію із серверною частиною. Навчитися використовувати UML для створення діаграм прецедентів та діяльності, а також перевіряти функціональність IoT клієнта через тестування та інтеграцію.
+   2.1 Завдання:
+1. Розробити будову програмного забезпечення IoT клієнта:
+o Спроектувати архітектуру IoT клієнта, враховуючи його призначення та взаємодію з серверною частиною. 
+o Розробити загальну структуру, включаючи модулі обробки даних, мережевих протоколів та управління пристроями.
+2. Створити UML діаграму прецедентів для IoT клієнта:
+o Діаграма прецедентів повинна описувати основні сценарії взаємодії користувача та системи з IoT клієнтом. 
+o Це можуть бути такі прецеденти, як «Налаштування параметрів клієнта», «Надсилання даних на сервер», «Оновлення прошивки» тощо.
+3. Розробити бізнес логіку та функції налаштування IoT клієнта:
+o Розробити основну бізнес логіку для роботи з даними пристроїв (зчитування, відправлення на сервер тощо).
+o Розробити функції налаштування IoT клієнта (конфігурування мережі, параметрів підключення, управління енергоспоживанням).
+4. Створити UML діаграму діяльності для IoT клієнта:
+o Діаграма діяльності повинна відображати основні дії IoT клієнта, наприклад, послідовність дій при передачі даних на сервер, процес з'єднання з мережею або оновлення прошивки.
+5. Створити програмну реалізацію бізнес логіки та функцій налаштування IoT клієнта:
+o Реалізувати програмний код для виконання бізнес логіки, включаючи обробку даних з датчиків, комунікацію із серверною частиною через мережеві протоколи (наприклад, MQTT, HTTP).
+o Реалізувати налаштування IoT клієнта, такі як конфігурація мережі, перезавантаження або відновлення параметрів за замовчуванням.
+6. Перевірити роботу IoT клієнта:
+o Провести тестування розроблених компонентів IoT клієнта, перевіривши коректність обміну даними із сервером, функціональність налаштувань та стабільність роботи.
+
+
+3 ОПИС ВИКОНАНОЇ РОБОТИ
+    У розробленому рішенні використовується мікроконтролерна плата на базі ESP32, яка виконує роль IoT-клієнта та забезпечує збір, обробку і передачу даних. Плата має вбудований мережевий модуль, що дозволяє здійснювати бездротовий обмін даними з центральним вузлом системи - хабом. Архітектура системи побудована за принципом ієрархії: периферійні пристрої з датчиками передають інформацію до хаба, а хаб відповідає за агрегацію даних, керування пристроями та обмін із серверною частиною.
+     IoT-клієнт зчитує дані з підключених сенсорів, зокрема датчика температури та вологості, а також інерційного модуля, який надає дані акселерометра та гіроскопа. Зчитування виконується циклічно з фіксованим інтервалом часу. Температурний сенсор надає значення температури навколишнього середовища, тоді як інерційний модуль використовується для оцінки рівня активності шляхом аналізу змін прискорення по трьох осях. Дані про частоту серцевих скорочень у межах проєкту формуються програмно та використовуються як імітація показників біометричного сенсора див. рис. Б.1.
+     Зібрані дані об’єднуються в єдину структуру, яка містить дату та час зчитування, фізіологічні показники, рівень активності, температурні значення та ідентифікатор пристрою. Формування часової мітки виконується на основі системного часу, синхронізованого з мережею. Після цього дані передаються на серверну частину хаба за допомогою HTTP-протоколу у форматі JSON див. рис. Б.2. 
+     Хаб у системі виступає центральною точкою взаємодії. Він приймає дані від кількох IoT-клієнтів, здійснює їх первинну валідацію та пересилає до серверної інфраструктури для збереження й аналітики. Окрім цього, хаб підтримує зворотний канал зв’язку: IoT-клієнт постійно перебуває в очікуванні керуючих команд, зокрема команд на увімкнення або вимкнення.
+
+4 ВИСНОВКИ
+     У результаті виконання роботи було спроєктовано та реалізовано IoT-клієнт, який забезпечує повний цикл збору, обробки та передачі даних від периферійних сенсорів до центрального вузла системи. Запропонована архітектура з використанням хаба дозволяє логічно відокремити рівень зчитування даних від рівня їх агрегації та взаємодії з серверною частиною, що підвищує масштабованість і керованість рішення.
+     Реалізована бізнес-логіка забезпечує стабільну роботу клієнта в автономному режимі, підтримує періодичне опитування датчиків, формування уніфікованих структур даних та передачу інформації через стандартні мережеві протоколи. Наявність механізмів очікування та обробки керуючих команд з боку хаба створює основу для централізованого управління пристроями.
+
+
+5 ВИКОРИСТАНІ ДЖЕРЕЛА
+1. Designing Connected Embedded Systems: Why You Need an IoT Platform. URL: https://www.iotforall.com/iot-platform-embedded-systems
+
+
+
+ДОДАТОК А
+Відеозапис
+https://youtu.be/FcgI5VZiWtY
+Хронологічний опис відеозапису:
+00:00 – Вступ
+00:25 – Опис виконаної работи
+02:09 – Демонтрація роботи
+
+
+ДОДАТОК Б
+Графічні матеріали
+
+
+     Рисунок Б.1 – Діаграма діяльності локальної мережі IoT пристроїв.
+
+     
+     Рисунок Б.2 – Діаграма прецендентів IoT приладів.
+
+
+
+ДОДАТОК В
+Програмний код
+В.1 Код для Іот-пристрою датчика активності
+1#include <WiFi.h>
+ 2#include <WebServer.h>
+ 3#include <HTTPClient.h>
+ 4#include <ArduinoJson.h>
+ 5#include <time.h>
+ 6
+ 7const char* ssid = "Wokwi-GUEST";
+ 8const char* password = "";
+ 9const char* remoteServerUrl = "";
+10
+11WebServer server(80);
+12
+13long lastPulse = 0;
+14int lastTemperature = 0;
+15const long deviceId = 1;
+16
+17String getCurrentDateTime() {
+18  time_t now = time(nullptr);
+19  struct tm* t = gmtime(&now);
+20  char buf[25];
+21  strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%SZ", t);
+22  return String(buf);
+23}
+24
+25void sendToRemote() {
+26  StaticJsonDocument<200> doc;
+27
+28  doc["ReadDateTime"] = getCurrentDateTime();
+29  doc["Pulse"] = lastPulse;
+30  doc["Temperature"] = lastTemperature;
+31  doc["DeviceId"] = deviceId;
+32
+33  String json;
+34  serializeJson(doc, json);
+35
+36  HTTPClient http;
+37  http.begin(remoteServerUrl);
+38  http.addHeader("Content-Type", "application/json");
+39  http.POST(json);
+40  http.end();
+41
+42  Serial.println("Sent IoTReading:");
+43  Serial.println(json);
+44}
+45
+46void handleSensorData() {
+47  StaticJsonDocument<100> incoming;
+48  deserializeJson(incoming, server.arg("plain"));
+49
+50  String type = incoming["Type"];
+51  long value = incoming["Value"];
+52
+53  if (type == "pulse") {
+54    lastPulse = value;
+55  }
+56
+57  if (type == "temperature") {
+58    lastTemperature = value;
+59  }
+60
+61  sendToRemote();
+62  server.send(200, "text/plain", "OK");
+63}
+64
+65void setup() {
+66  Serial.begin(115200);
+67
+68  WiFi.begin(ssid, password);
+69  while (WiFi.status() != WL_CONNECTED) delay(500);
+70
+71  configTime(0, 0, "pool.ntp.org");
+72
+73  server.on("/data", HTTP_POST, handleSensorData);
+74  server.begin();
+75
+76  Serial.print("HUB IP: ");
+77  Serial.println(WiFi.localIP());
+78}
+79
+80void loop() {
+81  server.handleClient();
+82}
+83
+
+В.2 Код для Іот-пристрою датчика температури
+1#include <WiFi.h>
+ 2#include <HTTPClient.h>
+ 3#include <ArduinoJson.h>
+ 4#include <DHT.h>
+ 5
+ 6#define DHTPIN 4
+ 7#define DHTTYPE DHT22
+ 8
+ 9const char* ssid = "Wokwi-GUEST";
+10const char* password = "";
+11const char* hubUrl = "http://192.168.1.100/data";
+12
+13DHT dht(DHTPIN, DHTTYPE);
+14
+15void setup() {
+16  Serial.begin(115200);
+17  dht.begin();
+18
+19  WiFi.begin(ssid, password);
+20  while (WiFi.status() != WL_CONNECTED) delay(500);
+21}
+22
+23void loop() {
+24  float temp = dht.readTemperature();
+25  if (isnan(temp)) return;
+26
+27  StaticJsonDocument<200> doc;
+28  doc["DeviceType"] = "temperature";
+29  doc["Value"] = temp;
+30
+31  String json;
+32  serializeJson(doc, json);
+33
+34  HTTPClient http;
+35  http.begin(hubUrl);
+36  http.addHeader("Content-Type", "application/json");
+37  http.POST(json);
+38  http.end();
+39
+40  Serial.println("Temperature sent");
+41  delay(5000);
+42}
+
+В.3 Код для Іот-пристрою датчика сердцебиття
+1#include <WiFi.h>
+ 2#include <HTTPClient.h>
+ 3#include <ArduinoJson.h>
+ 4
+ 5const char* ssid = "Wokwi-GUEST";
+ 6const char* password = "";
+ 7const char* hubUrl = "http://192.168.1.100/data";
+ 8
+ 9void setup() {
+10  Serial.begin(115200);
+11  WiFi.begin(ssid, password);
+12  while (WiFi.status() != WL_CONNECTED) delay(500);
+13}
+14
+15void loop() {
+16  int pulse = random(60, 90);
+17
+18  StaticJsonDocument<200> doc;
+19  doc["DeviceType"] = "pulse";
+20  doc["Value"] = pulse;
+21
+22  String json;
+23  serializeJson(doc, json);
+24
+25  HTTPClient http;
+26  http.begin(hubUrl);
+27  http.addHeader("Content-Type", "application/json");
+28  http.POST(json);
+29  http.end();
+30
+31  Serial.println("Pulse sent");
+32  delay(5000);
+33}
+
+В.4 Код для Іот-пристрою хабу
+1#include <WiFi.h>
+ 2#include <WebServer.h>
+ 3#include <HTTPClient.h>
+ 4#include <ArduinoJson.h>
+ 5#include <time.h>
+ 6
+ 7const char* ssid = "Wokwi-GUEST";
+ 8const char* password = "";
+ 9const char* remoteServerUrl = "";
+10
+11WebServer server(80);
+12
+13long lastPulse = 0;
+14int lastTemperature = 0;
+15const long deviceId = 1;
+16
+17String getCurrentDateTime() {
+18  time_t now = time(nullptr);
+19  struct tm* t = gmtime(&now);
+20  char buf[25];
+21  strftime(buf, sizeof(buf), "%Y-%m-%dT%H:%M:%SZ", t);
+22  return String(buf);
+23}
+24
+25void sendToRemote() {
+26  StaticJsonDocument<200> doc;
+27
+28  doc["ReadDateTime"] = getCurrentDateTime();
+29  doc["Pulse"] = lastPulse;
+30  doc["Temperature"] = lastTemperature;
+31  doc["DeviceId"] = deviceId;
+32
+33  String json;
+34  serializeJson(doc, json);
+35
+36  HTTPClient http;
+37  http.begin(remoteServerUrl);
+38  http.addHeader("Content-Type", "application/json");
+39  http.POST(json);
+40  http.end();
+41
+42  Serial.println("Sent IoTReading:");
+43  Serial.println(json);
+44}
+45
+46void handleSensorData() {
+47  StaticJsonDocument<100> incoming;
+48  deserializeJson(incoming, server.arg("plain"));
+49
+50  String type = incoming["Type"];
+51  long value = incoming["Value"];
+52
+53  if (type == "pulse") {
+54    lastPulse = value;
+55  }
+56
+57  if (type == "temperature") {
+58    lastTemperature = value;
+59  }
+60
+61  sendToRemote();
+62  server.send(200, "text/plain", "OK");
+63}
+64
+65void setup() {
+66  Serial.begin(115200);
+67
+68  WiFi.begin(ssid, password);
+69  while (WiFi.status() != WL_CONNECTED) delay(500);
+70
+71  configTime(0, 0, "pool.ntp.org");
+72
+73  server.on("/data", HTTP_POST, handleSensorData);
+74  server.begin();
+75
+76  Serial.print("HUB IP: ");
+77  Serial.println(WiFi.localIP());
+78}
+79
+80void loop() {
+81  server.handleClient();
+82}
+83
+
+2
+
 

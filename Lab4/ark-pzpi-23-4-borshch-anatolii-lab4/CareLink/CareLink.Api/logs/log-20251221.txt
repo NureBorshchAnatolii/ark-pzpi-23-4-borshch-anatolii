@@ -1,0 +1,80 @@
+2025-12-21 01:38:57.940 +02:00 [INF] User profile is available. Using 'C:\Users\iolk\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-21 01:38:58.085 +02:00 [INF] Now listening on: https://localhost:7173
+2025-12-21 01:38:58.086 +02:00 [INF] Now listening on: http://localhost:5266
+2025-12-21 01:38:58.088 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-21 01:38:58.089 +02:00 [INF] Hosting environment: Development
+2025-12-21 01:38:58.089 +02:00 [INF] Content root path: C:\Users\iolk\Desktop\ark-pzpi-23-4-borshch-anatolii\Lab2\ark-pzpi-23-4-borshch-anatolii-lab2\CareLink\CareLink.Api
+2025-12-21 01:38:58.458 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger - null null
+2025-12-21 01:38:58.527 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger - 301 0 null 71.6955ms
+2025-12-21 01:38:58.538 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/index.html - null null
+2025-12-21 01:38:58.645 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/index.html - 200 null text/html;charset=utf-8 106.8759ms
+2025-12-21 01:38:58.688 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/swagger-ui.css - null null
+2025-12-21 01:38:58.701 +02:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-12-21 01:38:58.703 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/swagger-ui.css - 499 144929 text/css 15.1292ms
+2025-12-21 01:38:58.757 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/favicon-16x16.png - null null
+2025-12-21 01:38:58.760 +02:00 [INF] Sending file. Request path: '/favicon-16x16.png'. Physical path: 'N/A'
+2025-12-21 01:38:58.761 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/favicon-16x16.png - 499 665 image/png 3.5824ms
+2025-12-21 01:38:58.809 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/v1/swagger.json - null null
+2025-12-21 01:38:58.892 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 82.9679ms
+2025-12-21 01:39:07.136 +02:00 [INF] Request starting HTTP/2 POST https://localhost:7173/api/v1/auth/login - application/json 58
+2025-12-21 01:39:07.168 +02:00 [INF] Executing endpoint 'CareLink.Api.Controllers.AuthController.Login (CareLink.Api)'
+2025-12-21 01:39:07.189 +02:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[CareLink.Api.Models.Responses.ApiResponse`1[CareLink.Application.Security.LoginData]]] Login(CareLink.Api.Models.Requests.LoginRequest) on controller CareLink.Api.Controllers.AuthController (CareLink.Api).
+2025-12-21 01:39:08.165 +02:00 [INF] Executed DbCommand (31ms) [Parameters=[@__email_0='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Address], [u].[DateCreated], [u].[DateOdBirth], [u].[Email], [u].[FirstName], [u].[LastName], [u].[PasswordHash], [u].[PhoneNumber], [u].[RoleId], [r].[Id], [r].[Name]
+FROM [Users] AS [u]
+INNER JOIN [Roles] AS [r] ON [u].[RoleId] = [r].[Id]
+WHERE [u].[Email] = @__email_0
+2025-12-21 01:39:08.255 +02:00 [INF] Executing OkObjectResult, writing value of type 'CareLink.Api.Models.Responses.ApiResponse`1[[CareLink.Application.Security.LoginData, CareLink.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-12-21 01:39:08.266 +02:00 [INF] Executed action CareLink.Api.Controllers.AuthController.Login (CareLink.Api) in 1073.0284ms
+2025-12-21 01:39:08.267 +02:00 [INF] Executed endpoint 'CareLink.Api.Controllers.AuthController.Login (CareLink.Api)'
+2025-12-21 01:39:08.274 +02:00 [INF] Request finished HTTP/2 POST https://localhost:7173/api/v1/auth/login - 200 null application/json; charset=utf-8 1137.9155ms
+2025-12-21 01:39:24.392 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/api/admin/system-state - null null
+2025-12-21 01:39:24.424 +02:00 [INF] Executing endpoint 'CareLink.Api.Controllers.AdminController.GetSystemState (CareLink.Api)'
+2025-12-21 01:39:24.428 +02:00 [INF] Route matched with {action = "GetSystemState", controller = "Admin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetSystemState() on controller CareLink.Api.Controllers.AdminController (CareLink.Api).
+2025-12-21 01:39:24.465 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[Address], [u].[DateCreated], [u].[DateOdBirth], [u].[Email], [u].[FirstName], [u].[LastName], [u].[PasswordHash], [u].[PhoneNumber], [u].[RoleId]
+FROM [Users] AS [u]
+2025-12-21 01:39:24.474 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [i].[Id], [i].[DeviceTypeId], [i].[SerialNumber], [i].[UserId]
+FROM [IotDevices] AS [i]
+2025-12-21 01:39:24.496 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[ExpiresAt], [s].[StartedAt], [s].[StripeSubscriptionId], [s].[SubscriptionStatusId], [s].[SubscriptionTypeId], [s].[UserId]
+FROM [Subscriptions] AS [s]
+2025-12-21 01:39:24.502 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [n].[Id], [n].[Content], [n].[CreatedDate], [n].[GroupOfIds], [n].[IsRead], [n].[NotificationTypeId], [n].[UserId]
+FROM [Notifications] AS [n]
+2025-12-21 01:39:24.514 +02:00 [INF] Executing OkObjectResult, writing value of type 'CareLink.Application.Dtos.Admin.SystemStateDto'.
+2025-12-21 01:39:24.517 +02:00 [INF] Executed action CareLink.Api.Controllers.AdminController.GetSystemState (CareLink.Api) in 87.8517ms
+2025-12-21 01:39:24.519 +02:00 [INF] Executed endpoint 'CareLink.Api.Controllers.AdminController.GetSystemState (CareLink.Api)'
+2025-12-21 01:39:24.520 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/api/admin/system-state - 200 null application/json; charset=utf-8 128.0838ms
+2025-12-21 01:48:36.160 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/api/admin/logs?from=2025-12-21%2001%3A38%3A57&to=2025-12-21%2001%3A39%3A24&level=INF - null null
+2025-12-21 01:48:36.168 +02:00 [INF] Executing endpoint 'CareLink.Api.Controllers.AdminController.GetLogs (CareLink.Api)'
+2025-12-21 01:48:36.174 +02:00 [INF] Route matched with {action = "GetLogs", controller = "Admin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLogs(System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String) on controller CareLink.Api.Controllers.AdminController (CareLink.Api).
+2025-12-21 01:48:36.189 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.EmptyPartition`1[[CareLink.Application.Dtos.Admin.SystemLogDto, CareLink.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-12-21 01:48:36.193 +02:00 [INF] Executed action CareLink.Api.Controllers.AdminController.GetLogs (CareLink.Api) in 17.99ms
+2025-12-21 01:48:36.195 +02:00 [INF] Executed endpoint 'CareLink.Api.Controllers.AdminController.GetLogs (CareLink.Api)'
+2025-12-21 01:48:36.195 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/api/admin/logs?from=2025-12-21%2001%3A38%3A57&to=2025-12-21%2001%3A39%3A24&level=INF - 200 null application/json; charset=utf-8 35.1373ms
+2025-12-21 01:48:40.491 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/api/admin/logs?from=2025-12-21%2001%3A38%3A57&to=2025-12-21%2001%3A39%3A24&level=INFO - null null
+2025-12-21 01:48:40.494 +02:00 [INF] Executing endpoint 'CareLink.Api.Controllers.AdminController.GetLogs (CareLink.Api)'
+2025-12-21 01:48:40.494 +02:00 [INF] Route matched with {action = "GetLogs", controller = "Admin"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLogs(System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String) on controller CareLink.Api.Controllers.AdminController (CareLink.Api).
+2025-12-21 01:48:40.501 +02:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.EmptyPartition`1[[CareLink.Application.Dtos.Admin.SystemLogDto, CareLink.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-12-21 01:48:40.502 +02:00 [INF] Executed action CareLink.Api.Controllers.AdminController.GetLogs (CareLink.Api) in 6.6818ms
+2025-12-21 01:48:40.503 +02:00 [INF] Executed endpoint 'CareLink.Api.Controllers.AdminController.GetLogs (CareLink.Api)'
+2025-12-21 01:48:40.504 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/api/admin/logs?from=2025-12-21%2001%3A38%3A57&to=2025-12-21%2001%3A39%3A24&level=INFO - 200 null application/json; charset=utf-8 13.2615ms
+2025-12-21 02:45:11.080 +02:00 [INF] Application is shutting down...
+2025-12-21 15:01:49.591 +02:00 [INF] User profile is available. Using 'C:\Users\iolk\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-21 15:01:49.814 +02:00 [INF] Now listening on: https://localhost:7173
+2025-12-21 15:01:49.816 +02:00 [INF] Now listening on: http://localhost:5266
+2025-12-21 15:01:49.818 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-21 15:01:49.819 +02:00 [INF] Hosting environment: Development
+2025-12-21 15:01:49.819 +02:00 [INF] Content root path: C:\Users\iolk\Desktop\ark-pzpi-23-4-borshch-anatolii\Lab2\ark-pzpi-23-4-borshch-anatolii-lab2\CareLink\CareLink.Api
+2025-12-21 15:01:50.227 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger - null null
+2025-12-21 15:01:50.287 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger - 301 0 null 61.9011ms
+2025-12-21 15:01:50.301 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/index.html - null null
+2025-12-21 15:01:50.406 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/index.html - 200 null text/html;charset=utf-8 104.176ms
+2025-12-21 15:01:50.446 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/swagger-ui.css - null null
+2025-12-21 15:01:50.464 +02:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-12-21 15:01:50.465 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/swagger-ui.css - 499 144929 text/css 19.2333ms
+2025-12-21 15:01:50.604 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/v1/swagger.json - null null
+2025-12-21 15:01:50.702 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 98.3824ms
+2025-12-21 18:42:40.931 +02:00 [INF] Application is shutting down...

@@ -1,0 +1,19 @@
+2025-12-20 23:04:25.997 +02:00 [INF] User profile is available. Using 'C:\Users\iolk\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-12-20 23:04:26.155 +02:00 [INF] Now listening on: https://localhost:7173
+2025-12-20 23:04:26.158 +02:00 [INF] Now listening on: http://localhost:5266
+2025-12-20 23:04:26.161 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-12-20 23:04:26.163 +02:00 [INF] Hosting environment: Development
+2025-12-20 23:04:26.163 +02:00 [INF] Content root path: C:\Users\iolk\Desktop\ark-pzpi-23-4-borshch-anatolii\Lab2\ark-pzpi-23-4-borshch-anatolii-lab2\CareLink\CareLink.Api
+2025-12-20 23:04:26.433 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger - null null
+2025-12-20 23:04:26.515 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger - 301 0 null 84.5671ms
+2025-12-20 23:04:26.555 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/index.html - null null
+2025-12-20 23:04:26.678 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/index.html - 200 null text/html;charset=utf-8 122.6014ms
+2025-12-20 23:04:26.737 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/swagger-ui.css - null null
+2025-12-20 23:04:26.762 +02:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-12-20 23:04:26.763 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/swagger-ui.css - 499 144929 text/css 25.7197ms
+2025-12-20 23:04:26.842 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/favicon-16x16.png - null null
+2025-12-20 23:04:26.845 +02:00 [INF] Sending file. Request path: '/favicon-16x16.png'. Physical path: 'N/A'
+2025-12-20 23:04:26.847 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/favicon-16x16.png - 499 665 image/png 5.694ms
+2025-12-20 23:04:26.932 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7173/swagger/v1/swagger.json - null null
+2025-12-20 23:04:27.106 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7173/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 174.4421ms
+2025-12-20 23:07:10.517 +02:00 [INF] Application is shutting down...
