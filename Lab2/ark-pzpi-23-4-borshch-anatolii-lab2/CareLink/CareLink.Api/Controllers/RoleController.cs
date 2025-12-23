@@ -1,4 +1,5 @@
-﻿using CareLink.Application.Contracts.Repositories;
+﻿using CareLink.Api.Models.Responses;
+using CareLink.Application.Contracts.Repositories;
 using CareLink.Domain.Entities.SubEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace CareLink.Api.Controllers
         public async Task<IActionResult> GetAllRoles()
         {
             var types = await _roleRepository.GetAllAsync();
-            return Ok(types);
+            return Ok(ApiResponse<IReadOnlyCollection<Role>>.Ok(types));
         }
         
         [HttpPost]
@@ -32,7 +33,7 @@ namespace CareLink.Api.Controllers
                 return BadRequest($"Device type {deviceType} already exists");
             
             await _roleRepository.AddAsync(new Role() { Name = deviceType });
-            return Created();
+            return Ok(ApiResponse.Ok());
         }
 
         [HttpPut("{typeId:long}")]
@@ -45,7 +46,7 @@ namespace CareLink.Api.Controllers
             
             existedType.Name = deviceType;
             await _roleRepository.UpdateAsync(existedType);
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
 
         [HttpDelete("{typeId:long}")]
@@ -57,7 +58,7 @@ namespace CareLink.Api.Controllers
                 return BadRequest($"Device type {typeId} not found");
             
             await _roleRepository.DeleteAsync(existedType);
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
     }
 }

@@ -65,6 +65,21 @@ namespace CareLink.Application.Implementations
 
             await _deviceRepository.UpdateAsync(device);
         }
+        
+        public async Task<IoTDeviceStateDto> GetDeviceStateBySerialNumberIdAsync(string number)
+        {
+            return await _deviceRepository.GetDeviceStateBySerialNumberAsync(number);
+        }
+
+        public async Task ChangeDeviceState(string serialNumber)
+        {
+            var devices = await _deviceRepository.GetAllDevicesIncludedAsync();
+            
+            var device = devices.FirstOrDefault(d => d.SerialNumber.Trim() == serialNumber.Trim());
+            device.IsActive = !device.IsActive;
+            
+            await _deviceRepository.UpdateAsync(device);
+        }
 
         private async Task ValidateUser(long userId)
         {

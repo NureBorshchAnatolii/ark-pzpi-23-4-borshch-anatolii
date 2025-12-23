@@ -1,3 +1,4 @@
+using CareLink.Api.Middlewares;
 using CareLink.Api.SwaggerConfigs;
 using CareLink.Application;
 using CareLink.Persistence;
@@ -25,12 +26,11 @@ builder.Services.AddControllers();
 builder.Services.AddBearerSecurityScheme();
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.MapControllers();
 
 app.UseAuthentication();

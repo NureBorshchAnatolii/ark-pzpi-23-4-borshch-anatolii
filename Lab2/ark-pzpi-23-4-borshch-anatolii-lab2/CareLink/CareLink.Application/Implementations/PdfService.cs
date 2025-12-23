@@ -42,7 +42,7 @@ namespace CareLink.Application.Implementations
 
             var relatives = await _relativeRepo.GetAllIncludedRelatives();
             var userRelatives = relatives
-                .Where(r => r.GuardianUserId == guardianUserId)
+                .Where(r => r.RelativeUserId == relativeUserId)
                 .Select(r => new { r.RelativeUser.FirstName, r.RelativeUser.LastName, r.RelationType.Name })
                 .ToList();
 

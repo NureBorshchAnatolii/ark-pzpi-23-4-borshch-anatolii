@@ -1,4 +1,5 @@
-﻿using CareLink.Application.Contracts.Security;
+﻿using CareLink.Api.Models.Responses;
+using CareLink.Application.Contracts.Security;
 using CareLink.Application.Contracts.Services;
 using CareLink.Application.Dtos.User;
 using Microsoft.AspNetCore.Authorization;
@@ -24,7 +25,7 @@ namespace CareLink.Api.Controllers
         public async Task<IActionResult> GetUserProfileDataAsync(long id)
         {
             var userDto = await _userProfileService.GetProfileAsync(id);
-            return Ok(userDto);
+            return Ok(ApiResponse<UserProfileDto?>.Ok(userDto));
         }
         
         [HttpGet]
@@ -33,7 +34,7 @@ namespace CareLink.Api.Controllers
             var id = _userContext.GetApplicationUserId();
             
             var userDto = await _userProfileService.GetProfileAsync(id);
-            return Ok(userDto);
+            return Ok(ApiResponse<UserProfileDto?>.Ok(userDto));
         }
         
         [HttpPut]
@@ -42,7 +43,7 @@ namespace CareLink.Api.Controllers
             var id = _userContext.GetApplicationUserId();
             
             await _userProfileService.UpdateProfileAsync(id, request);
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
 
         [HttpDelete]
@@ -51,7 +52,7 @@ namespace CareLink.Api.Controllers
             var id = _userContext.GetApplicationUserId();
             
             await _userProfileService.DeleteProfileAsync(id);
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
     }
 }

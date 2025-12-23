@@ -1,4 +1,5 @@
-﻿using CareLink.Domain.Entities;
+﻿using CareLink.Application.Contracts.Security;
+using CareLink.Domain.Entities;
 using CareLink.Domain.Entities.SubEntities;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,10 @@ namespace CareLink.Persistence.DbContext
 {
     public class CareLinkDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public CareLinkDbContext(DbContextOptions<CareLinkDbContext> options) : base(options){}
+        public CareLinkDbContext(DbContextOptions<CareLinkDbContext> options) :
+            base(options)
+        {
+        }
         
         public DbSet<CognitiveExercise> CognitiveExercises { get; set; }
         public DbSet<CognitiveResult> CognitiveResults { get; set; }
@@ -92,6 +96,20 @@ namespace CareLink.Persistence.DbContext
                 new SubscriptionStatus { Id = 3, Name = "Expired" },
                 new SubscriptionStatus { Id = 4, Name = "Cancelled" }
             );
+
+            modelBuilder.Entity<User>().HasData(
+                new User()
+                {
+                    Id = 1,
+                    FirstName = "System",
+                    LastName = "Administrator",
+                    RoleId = 1,
+                    Email = "admin@carelink.local",
+                    PasswordHash = "10000.DbMlh4CqlRtLKi3FOfg4Tw==.0fOIbhyRlAHKPHovpJlDh53c6r9Pz8BuzEoCfhVnqP8=",
+                    DateOdBirth = new DateTime(1990, 1, 1),
+                    Address = "Kyiv, Admin Street 1",
+                    PhoneNumber = "+380501111111"
+                });
         }
     }
 }

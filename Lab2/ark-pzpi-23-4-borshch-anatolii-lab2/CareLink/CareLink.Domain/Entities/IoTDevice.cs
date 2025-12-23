@@ -6,6 +6,8 @@ namespace CareLink.Domain.Entities
     {
         public string SerialNumber { get; set; } = null!;
         
+        public bool IsActive { get; set; }
+        
         public long UserId { get; set; }
         public User User { get; set; } = null!;
         

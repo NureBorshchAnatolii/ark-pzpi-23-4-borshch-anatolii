@@ -1,4 +1,5 @@
-﻿using CareLink.Application.Contracts.Repositories;
+﻿using CareLink.Api.Models.Responses;
+using CareLink.Application.Contracts.Repositories;
 using CareLink.Domain.Entities.SubEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CareLink.Api.Controllers
 {
     [ApiController]
-    [Route("api/difficultys")]
+    [Route("api/difficulties")]
     [Authorize]
     public class DifficultyController : ControllerBase
     {
@@ -21,7 +22,7 @@ namespace CareLink.Api.Controllers
         public async Task<IActionResult> GetDifficultiesAsync()
         {
             var types = await _difficultyRepository.GetAllAsync();
-            return Ok(types);
+            return Ok(ApiResponse<IReadOnlyCollection<Difficulty>>.Ok(types));
         }
         
         [HttpPost]
@@ -33,7 +34,7 @@ namespace CareLink.Api.Controllers
                 return BadRequest($"Device type {deviceType} already exists");
             
             await _difficultyRepository.AddAsync(new Difficulty() { Name = deviceType });
-            return Created();
+            return Ok(ApiResponse.Ok());
         }
 
         [HttpPut("{typeId:long}")]
@@ -46,7 +47,7 @@ namespace CareLink.Api.Controllers
             
             existedType.Name = deviceType;
             await _difficultyRepository.UpdateAsync(existedType);
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
 
         [HttpDelete("{typeId:long}")]
@@ -58,7 +59,7 @@ namespace CareLink.Api.Controllers
                 return BadRequest($"Device type {typeId} not found");
             
             await _difficultyRepository.DeleteAsync(existedType);
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
     }
 }

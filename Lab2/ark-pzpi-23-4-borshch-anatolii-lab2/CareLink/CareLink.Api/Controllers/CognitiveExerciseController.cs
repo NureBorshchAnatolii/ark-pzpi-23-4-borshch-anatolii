@@ -1,4 +1,5 @@
 ﻿using CareLink.Api.Models.Requests;
+using CareLink.Api.Models.Responses;
 using CareLink.Application.Contracts.Security;
 using CareLink.Application.Contracts.Services;
 using CareLink.Application.Dtos.CognitiveExercise;
@@ -26,7 +27,7 @@ namespace CareLink.Api.Controllers
         public async Task<IActionResult> GetAllCognitiveExercisesAsync()
         {
             var exercises = await _cognitiveExerciseService.GetAllCognitiveExercisesAsync();
-            return Ok(exercises);
+            return Ok(ApiResponse<IEnumerable<CognitiveExerciseDto>>.Ok(exercises));
         }
         
         [HttpPost]
@@ -38,7 +39,7 @@ namespace CareLink.Api.Controllers
                 , request.DifficultyId, request.TypeId, userId);
             await _cognitiveExerciseService.CreateCognitiveExercise(command);
 
-            return Ok("Exercise was created");
+            return Ok(ApiResponse.Ok("Exercise was created"));
         }
 
         [HttpPut("{exerciseId:long}")]
@@ -50,7 +51,7 @@ namespace CareLink.Api.Controllers
                 , request.Description, request.DifficultyId, request.TypeId,userId);
             await _cognitiveExerciseService.UpdateCognitiveExercise(command);
             
-            return Ok("Exercise was updated");
+            return Ok(ApiResponse.Ok("Exercise was updated"));
         }
 
         [HttpDelete("{exerciseId:long}")]
@@ -61,7 +62,7 @@ namespace CareLink.Api.Controllers
             var command = new CognitiveExerciseDeleteRequest(userId, exerciseId);
             await _cognitiveExerciseService.DeleteCognitiveExercise(command);
             
-            return Ok("Exercise was deleted");
+            return Ok(ApiResponse.Ok("Exercise was deleted"));
         }
 
         [HttpPost("{exerciseId:long}/result")]
@@ -73,14 +74,14 @@ namespace CareLink.Api.Controllers
                 request.CompletedAt, userId);
             await _cognitiveExerciseService.ReportResultAsync(command);
 
-            return Ok("Result was saved");
+            return Ok(ApiResponse.Ok("Result was saved"));
         }
 
         [HttpGet("{userId:long}/result")]
         public async Task<IActionResult> GetUsersCognitiveExerciseResults(long userId)
         {
             var results = await _cognitiveExerciseService.GetUserResultsAsync(userId);
-            return Ok(results);
+            return Ok(ApiResponse<IEnumerable<CognitiveExerciseResultDto>>.Ok(results));
         }
         
     }

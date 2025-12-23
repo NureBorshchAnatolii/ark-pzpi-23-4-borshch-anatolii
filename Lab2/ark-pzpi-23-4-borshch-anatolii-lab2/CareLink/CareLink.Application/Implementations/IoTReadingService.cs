@@ -20,15 +20,17 @@ namespace CareLink.Application.Implementations
 
         public async Task<IoTReadingDto> CreateReadingAsync(IoTReadingCreateRequest request)
         {
-            await EnsureDeviceOwnedByUser(request.DeviceId, request.UserId);
-
+            var device = await _deviceRepository.GetDeviceBySerialNumberAsync(request.SerialNumber);
+            if (device == null)
+                throw new ArgumentException($"Device with serial number {request.SerialNumber} does not exist");
+            
             var reading = new IoTReading
             {
                 ReadDateTime = request.ReadDateTime,
                 Pulse = request.Pulse,
                 ActivityLevel = request.ActivityLevel,
                 Temperature = request.Temperature,
-                DeviceId = request.DeviceId
+                DeviceId = device.Id
             };
 
             await _readingRepository.AddAsync(reading);

@@ -1,4 +1,6 @@
-﻿using CareLink.Application.Contracts.Services;
+﻿using CareLink.Api.Models.Responses;
+using CareLink.Application.Contracts.Services;
+using CareLink.Application.Dtos.Admin;
 using CareLink.Domain.Entities.SubEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +44,7 @@ namespace CareLink.Api.Controllers
         public async Task<IActionResult> GetLogs([FromQuery] DateTime? from, [FromQuery] DateTime? to, [FromQuery] string? level)
         {
             var logs = await _adminService.GetLogsAsync(from, to, level);
-            return Ok(logs);
+            return Ok(ApiResponse<IEnumerable<SystemLogDto>>.Ok(logs));
         }
     }
 }

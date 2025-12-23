@@ -1,4 +1,5 @@
 ﻿using CareLink.Api.Models.Requests;
+using CareLink.Api.Models.Responses;
 using CareLink.Application.Contracts.Security;
 using CareLink.Application.Contracts.Services;
 using CareLink.Application.Dtos.IoTDevices;
@@ -24,47 +25,43 @@ namespace CareLink.Api.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateReadingAsync([FromBody] CreateIoTReadingRequest request)
         {
-            var userId = _userContext.GetApplicationUserId();
-
             var command = new IoTReadingCreateRequest(
                 request.ReadDateTime,
                 request.Pulse,
                 request.ActivityLevel,
                 request.Temperature,
-                request.DeviceId,
-                userId);
+                request.SerialNumber);
 
             var result = await _readingService.CreateReadingAsync(command);
 
             return Ok(result);
         }
 
-        [HttpGet("user")]
-        public async Task<IActionResult> GetAllReadingsByUserAsync()
+        [HttpGet("{userId:long}")]
+        public async Task<IActionResult> GetAllReadingsByUserAsync(long userId)
         {
-            var userId = _userContext.GetApplicationUserId();
             var result = await _readingService.GetAllReadingsByUserAsync(userId);
-            return Ok(result);
+            return Ok(ApiResponse<IEnumerable<IoTReadingDto>>.Ok(result));
         }
 
-        [HttpGet("user/latest")]
-        public async Task<IActionResult> GetLatestReadingsByUserAsync([FromQuery] int count)
+        [HttpGet("{userId:long}/latest")]
+        public async Task<IActionResult> GetLatestReadingsByUserAsync(long userId,[FromQuery] int count)
         {
-            var userId = _userContext.GetApplicationUserId();
             var result = await _readingService.GetLatestReadingsByUserAsync(userId, count);
-            return Ok(result);
+            return Ok(ApiResponse<IEnumerable<IoTReadingDto>>.Ok(result));
         }
 
-        [HttpGet("user/range")]
+        [HttpGet("{userId:long}/range")]
         public async Task<IActionResult> GetReadingsInRangeByUserAsync(
+            long userId,
             [FromQuery] DateTime from,
             [FromQuery] DateTime to)
         {
-            var userId = _userContext.GetApplicationUserId();
             var result = await _readingService.GetReadingsInRangeByUserAsync(userId, from, to);
-            return Ok(result);
+            return Ok(ApiResponse<IEnumerable<IoTReadingDto>>.Ok(result));
         }
     }
 }

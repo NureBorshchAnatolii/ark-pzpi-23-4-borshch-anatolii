@@ -8,5 +8,8 @@ namespace CareLink.Application.Contracts.Services
         Task<IEnumerable<IoTDeviceDto>> GetAllUserDevicesAsync(long userId);
         Task CreateDeviceAsync(IoTDeviceCreateRequest request);
         Task UpdateDeviceAsync(IoTDeviceUpdateRequest request);
+        Task<IoTDeviceStateDto> GetDeviceStateBySerialNumberIdAsync(string number);
+
+        Task ChangeDeviceState(string serialNumber);
     }
 }

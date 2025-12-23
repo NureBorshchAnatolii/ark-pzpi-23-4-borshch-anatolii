@@ -8,10 +8,14 @@ namespace CareLink.Api.Middlewares
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next)
+        public ExceptionHandlingMiddleware(
+            RequestDelegate next,
+            ILogger<ExceptionHandlingMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -22,56 +26,50 @@ namespace CareLink.Api.Middlewares
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Unhandled exception");
                 await HandleExceptionAsync(context, ex);
             }
         }
 
-        private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static async Task HandleExceptionAsync(
+            HttpContext context,
+            Exception exception)
         {
-            HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
-            string message = "An unexpected error occurred.";
+            var statusCode = HttpStatusCode.InternalServerError;
+            var message = "Internal server error.";
 
-            switch (exception)
+            if (exception is ValidationException ||
+                exception is ArgumentException ||
+                exception is InvalidOperationException)
             {
-                case KeyNotFoundException:
-                    statusCode = HttpStatusCode.NotFound;
-                    message = exception.Message;
-                    break;
-
-                case UnauthorizedAccessException:
-                    statusCode = HttpStatusCode.Unauthorized;
-                    message = "Unauthorized access.";
-                    break;
-
-                case ArgumentException:
-                case InvalidOperationException:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = exception.Message;
-                    break;
-
-                case ValidationException validationEx:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = validationEx.Message;
-                    break;
-
-                default:
-                    statusCode = HttpStatusCode.InternalServerError;
-                    message = exception.Message;
-                    break;
+                statusCode = HttpStatusCode.BadRequest;
+                message = GetCleanMessage(exception);
+            }
+            else if (exception is UnauthorizedAccessException)
+            {
+                statusCode = HttpStatusCode.Unauthorized;
+                message = "Unauthorized.";
+            }
+            else if (exception is KeyNotFoundException)
+            {
+                statusCode = HttpStatusCode.NotFound;
+                message = GetCleanMessage(exception);
             }
 
-            var response = new ApiResponse
-            {
-                Success = false,
-                Message = message,
-                Errors = new List<string> { exception.Message }
-            };
+            var response = ApiResponse.Fail(message);
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
 
-            var json = JsonSerializer.Serialize(response);
-            await context.Response.WriteAsync(json);
+            await context.Response.WriteAsync(
+                JsonSerializer.Serialize(response));
+        }
+        
+        private static string GetCleanMessage(Exception ex)
+        {
+            return ex.Message
+                .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+                .First();
         }
     }
 }

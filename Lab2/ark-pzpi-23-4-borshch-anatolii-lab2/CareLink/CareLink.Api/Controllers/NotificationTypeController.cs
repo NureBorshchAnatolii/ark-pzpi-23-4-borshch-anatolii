@@ -1,4 +1,5 @@
-﻿using CareLink.Application.Contracts.Repositories;
+﻿using CareLink.Api.Models.Responses;
+using CareLink.Application.Contracts.Repositories;
 using CareLink.Domain.Entities.SubEntities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace CareLink.Api.Controllers
         public async Task<IActionResult> GetAllRolesAsync()
         {
             var roles = await _notifficationTypeRepository.GetAllAsync();
-            return Ok(roles);
+            return Ok(ApiResponse<IReadOnlyCollection<NotificationType>>.Ok(roles));
         }
         
         [HttpPost]
@@ -33,7 +34,7 @@ namespace CareLink.Api.Controllers
                 return BadRequest($"Device type {deviceType} already exists");
             
             await _notifficationTypeRepository.AddAsync(new NotificationType() { Name = deviceType });
-            return Created();
+            return Ok(ApiResponse.Ok("Created"));
         }
 
         [HttpPut("{typeId:long}")]
@@ -46,7 +47,7 @@ namespace CareLink.Api.Controllers
             
             existedType.Name = deviceType;
             await _notifficationTypeRepository.UpdateAsync(existedType);
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
 
         [HttpDelete("{typeId:long}")]
@@ -58,7 +59,7 @@ namespace CareLink.Api.Controllers
                 return BadRequest($"Device type {typeId} not found");
             
             await _notifficationTypeRepository.DeleteAsync(existedType);
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
     }
 }

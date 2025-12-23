@@ -1,4 +1,5 @@
 ﻿using CareLink.Api.Models.Requests;
+using CareLink.Api.Models.Responses;
 using CareLink.Application.Contracts.Security;
 using CareLink.Application.Contracts.Services;
 using CareLink.Application.Dtos;
@@ -26,9 +27,8 @@ namespace CareLink.Api.Controllers
         public async Task<IActionResult> GetUsersMessagesAsync(long receiverId)
         {
             var userId = _userContext.GetApplicationUserId();
-
             var messages = await _messageService.GetUserMessagesAsync(userId, receiverId);
-            return Ok(messages);
+            return Ok(ApiResponse<IEnumerable<MessageDto>>.Ok(messages));
         }
 
         [HttpPost]
@@ -39,7 +39,7 @@ namespace CareLink.Api.Controllers
             var request = new MessageCreateRequest(messageDto.Content, senderId, messageDto.ReceiverId);
 
             var message = await _messageService.CreateMessageAsync(request);
-            return Ok(message);
+            return Ok(ApiResponse<MessageDto>.Ok(message));
         }
 
         [HttpPut("{messageId:long}")]
@@ -50,7 +50,7 @@ namespace CareLink.Api.Controllers
             var request = new MessageUpdateRequest(messageId, messageDto.NewContent);
 
             var updated = await _messageService.UpdateMessageAsync(request);
-            return Ok(updated);
+            return Ok(ApiResponse<MessageDto>.Ok(updated));
         }
 
         [HttpDelete("{messageId:long}")]
@@ -62,7 +62,7 @@ namespace CareLink.Api.Controllers
 
             await _messageService.DeleteMessageAsync(command);
 
-            return Ok("Message successfully deleted");
+            return Ok(ApiResponse.Ok("Message successfully deleted"));
         }
     }
 }

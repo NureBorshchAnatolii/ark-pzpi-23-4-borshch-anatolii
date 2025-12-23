@@ -8,6 +8,6 @@
         public int Temperature { get; set; }
         
         public long DeviceId { get; set; }
-        public IoTDevice IoTDevice { get; set; }
+        public IoTDevice IoTDevice { get; set; } = null!;
     }
 }

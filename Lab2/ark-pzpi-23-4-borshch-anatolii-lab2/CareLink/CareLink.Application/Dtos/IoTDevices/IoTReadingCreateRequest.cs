@@ -4,8 +4,6 @@
         DateTime ReadDateTime,
         long Pulse,
         long ActivityLevel,
-        int Temperature,
-        long DeviceId,
-        long UserId
-        );
+        int Temperature, 
+        string SerialNumber);
 }

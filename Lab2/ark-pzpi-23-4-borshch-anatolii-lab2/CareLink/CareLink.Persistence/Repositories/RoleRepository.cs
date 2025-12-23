@@ -26,7 +26,7 @@ namespace CareLink.Persistence.Repositories
         {
             var currentRole = await _context.Roles.FirstOrDefaultAsync(x => x.Id == roleId);
             
-            if(currentRole == null)
+            if(currentRole == null || roleId == 1 || roleId == 2)
                 throw new ArgumentException("Role does not exist");
             
             return currentRole.Id;

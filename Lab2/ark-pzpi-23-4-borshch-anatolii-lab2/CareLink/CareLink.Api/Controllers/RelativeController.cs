@@ -1,4 +1,5 @@
 ﻿using CareLink.Api.Models.Requests;
+using CareLink.Api.Models.Responses;
 using CareLink.Application.Contracts.Repositories;
 using CareLink.Application.Contracts.Security;
 using CareLink.Application.Contracts.Services;
@@ -33,7 +34,7 @@ namespace CareLink.Api.Controllers
             var userId = _userContext.GetApplicationUserId();
             
             var relative = await _relativeService.GetAllRelativesAsync(userId);
-            return Ok(relative);
+            return Ok(ApiResponse<IEnumerable<RelativeDto>>.Ok(relative));
         }
 
         [HttpPost]
@@ -44,7 +45,7 @@ namespace CareLink.Api.Controllers
             var command = new RelativeCreateCommand(userId, request.RelativeId, request.RelationTypeId);
             await _relativeService.CreateRelativeAsync(command);
             
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
 
         [HttpDelete("{relativeId:long}")]
@@ -55,7 +56,7 @@ namespace CareLink.Api.Controllers
             var command = new RelativeDeleteCommand(userId, relativeId);
             await _relativeService.DeleteRelativeAsync(command);
             
-            return Ok();
+            return Ok(ApiResponse.Ok());
         }
 
         [HttpGet("{relativeId:long}/report")]

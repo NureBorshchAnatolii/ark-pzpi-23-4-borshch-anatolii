@@ -6,6 +6,6 @@
         public long Pulse { get; set; }
         public long ActivityLevel { get; set; }
         public int Temperature { get; set; }
-        public long DeviceId { get; set; }
+        public string SerialNumber { get; set; } = null!;
     }
 }

@@ -6,43 +6,58 @@ namespace CareLink.Application.Implementations
 {
     public class FileLogReaderService
     {
-        private readonly string _logFilePath;
+        private readonly string _logFolderPath;
 
         public FileLogReaderService(IConfiguration config)
         {
-            _logFilePath = config["Logging:FilePath"] ?? "logs/log.txt";
+            _logFolderPath = Path.GetDirectoryName(config["Logging:FilePath"] ?? "logs/log-.txt") ?? "logs";
         }
 
-        public async Task<IEnumerable<SystemLogDto>> ReadLogsAsync(DateTime? from = null, DateTime? to = null, string? level = null)
+        public async Task<IEnumerable<SystemLogDto>> ReadLogsAsync(
+            DateTime? from = null,
+            DateTime? to = null,
+            string? level = null)
         {
-            if (!File.Exists(_logFilePath))
+            if (!Directory.Exists(_logFolderPath))
                 return Enumerable.Empty<SystemLogDto>();
 
-            var lines = await File.ReadAllLinesAsync(_logFilePath);
+            var logFiles = Directory.GetFiles(_logFolderPath, "log-*.txt");
+            var logs = new List<SystemLogDto>();
 
-            var logs = lines
-                .Select(line => ParseLine(line))
-                .Where(log => log != null)
-                .Cast<SystemLogDto>();
+            foreach (var file in logFiles)
+            {
+                using var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                using var reader = new StreamReader(stream);
 
-            if (from.HasValue) logs = logs.Where(l => l.Timestamp >= from.Value);
-            if (to.HasValue) logs = logs.Where(l => l.Timestamp <= to.Value);
-            if (!string.IsNullOrEmpty(level)) logs = logs.Where(l => l.Level.Equals(level, StringComparison.OrdinalIgnoreCase));
+                string? line;
+                while ((line = await reader.ReadLineAsync()) != null)
+                {
+                    var log = ParseLine(line);
+                    if (log != null)
+                        logs.Add(log);
+                }
+            }
+
+            if (from.HasValue) logs = logs.Where(l => l.Timestamp >= from.Value).ToList();
+            if (to.HasValue) logs = logs.Where(l => l.Timestamp <= to.Value).ToList();
+            if (!string.IsNullOrEmpty(level))
+                logs = logs.Where(l => l.Level.Equals(level, StringComparison.OrdinalIgnoreCase)).ToList();
 
             return logs;
         }
 
         private SystemLogDto? ParseLine(string line)
         {
-            var match = Regex.Match(line, 
-                @"^(?<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+)\s\[(?<level>\w+)\]\s(?<source>.+?)\s-\s(?<message>.+)$");
+            var match = Regex.Match(line,
+                @"^(?<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{3}) [+-]\d{2}:\d{2} \[(?<level>\w+)\] (?<message>.+)$");
+
             if (!match.Success) return null;
 
             return new SystemLogDto
             {
                 Timestamp = DateTime.Parse(match.Groups["date"].Value),
                 Level = match.Groups["level"].Value,
-                Source = match.Groups["source"].Value,
+                Source = "System",
                 Message = match.Groups["message"].Value
             };
         }
